@@ -129,7 +129,7 @@ class DeReference(object):
                     references = doc_type._get_db()[col].find({'_id': {'$in': refs}})
                     for ref in references:
                         doc = doc_type._from_son(ref)
-                        object_map[doc.id] = doc
+                        object_map[doc_type.id.to_mongo(doc.id)] = doc
                 else:
                     references = get_db()[col].find({'_id': {'$in': refs}})
                     for ref in references:
@@ -141,7 +141,7 @@ class DeReference(object):
                                     for x in col.split('_')))._from_son(ref)
                         else:
                             doc = doc_type._from_son(ref)
-                        object_map[doc.id] = doc
+                        object_map[doc_type.id.to_mongo(doc.id)] = doc
         return object_map
 
     def _attach_objects(self, items, depth=0, instance=None, name=None):
